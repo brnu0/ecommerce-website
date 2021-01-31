@@ -14,7 +14,7 @@ const Directory = props => {
             }}
           >
             <a >
-              ShopCards
+              Shop Cards
             </a>
           </div>
           <div
