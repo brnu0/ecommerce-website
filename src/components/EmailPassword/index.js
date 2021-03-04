@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { withRouter } from 'react-router-dom';
-import { resetPassword, resetAllAuthForms } from './../../redux/User/user.actions';
+import { useHistory } from 'react-router-dom';
+import { resetPasswordStart, resetUserState } from './../../redux/User/user.actions';
 
 import './styles.scss';
 import AuthWrapper from './../AuthWrapper';
@@ -10,28 +10,29 @@ import Button from './../forms/Button';
 
 const mapState = ({ user }) => ({
     resetPasswordSuccess: user.resetPasswordSuccess,
-    resetPasswordError: user.resetPasswordError
+    userErr: user.userErr
 });
 
 const EmailPassword = props => {
-    const { resetPasswordSuccess, resetPasswordError } = useSelector(mapState);
     const dispatch = useDispatch();
+    const history = useHistory();
+    const { resetPasswordSuccess, userErr } = useSelector(mapState); 
     const [email, setEmail] = useState('');
     const [errors, setErrors] = useState([]);
 
     useEffect(() =>{
         if(resetPasswordSuccess){
             reset();
-            dispatch(resetAllAuthForms());
-            props.history.push('/login');
+            dispatch(resetUserState());
+            history.push('/login');
         }
     }, [resetPasswordSuccess]);
     
     useEffect(() =>{
-        if(Array.isArray(resetPasswordError) && resetPasswordError.length > 0){
-            setErrors(resetPasswordError);
+        if(Array.isArray(userErr) && userErr.length > 0){
+            setErrors(userErr);
         }
-    }, [resetPasswordError]);
+    }, [userErr]);
 
     const reset = () => {
         setEmail('');
@@ -40,7 +41,7 @@ const EmailPassword = props => {
 
     const handleSubmit = e =>{
         e.preventDefault();
-        dispatch(resetPassword({ email }));
+        dispatch(resetPasswordStart({ email }));
     }
 
     const configAuthWrapper = {
@@ -80,4 +81,4 @@ const EmailPassword = props => {
     );
 }
 
-export default withRouter(EmailPassword);
+export default EmailPassword;
