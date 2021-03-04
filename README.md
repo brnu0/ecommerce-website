@@ -4,6 +4,7 @@
 **In Development**
 
 ## :computer: Technologies In Use
-* React Redux
+* React JS
+* Redux
 * GraphQL
 * Firebase
