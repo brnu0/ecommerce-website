@@ -13,6 +13,8 @@ import WithAdminAuth from './hoc/withAdminAuth';
 // layouts
 import MainLayout from './layouts/MainLayout';
 import HomepageLayout from './layouts/HomepageLayout';
+import AdminLayout from './layouts/AdminLayout';
+import DashboardLayout from './layouts/DashboardLayout';
 
 //Pages
 import Homepage from './pages/Homepage';
@@ -21,6 +23,7 @@ import Login from './pages/Login';
 import Recovery from './pages/Recovery';
 import Dashboard from './pages/Dashboard';
 import Admin from './pages/Admin';
+import ProductDetails from './pages/ProductDetails';
 
 //Styles
 import './default.scss';
@@ -43,6 +46,12 @@ const App =  props => {
               <Homepage />
             </HomepageLayout>
           )} />
+          <Route path="/product/:productID" 
+          render={() => (
+            <MainLayout>
+              <ProductDetails />
+            </MainLayout>
+          )} />
           <Route path="/registration" 
           render={() => (
             <MainLayout>
@@ -64,17 +73,17 @@ const App =  props => {
           <Route path="/dashboard" 
           render={() => (
             <WithAuth>
-              <MainLayout>
+              <DashboardLayout>
                 <Dashboard />
-              </MainLayout>
+              </DashboardLayout>
             </WithAuth>
           )}/>
           <Route path="/admin" 
           render={() => (
             <WithAdminAuth>
-              <MainLayout>
+              <AdminLayout>
                 <Admin />
-              </MainLayout>
+              </AdminLayout>
             </WithAdminAuth>
           )}/>
         </Switch>
